@@ -1,0 +1,33 @@
+{
+  "originHash" : "416aff5a75a9ec19cbe02db1cfe60bccfca1a0f7709c421c6e8852db7b514192",
+  "pins" : [
+    {
+      "identity" : "metalvertexhelper",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/yukiny0811/MetalVertexHelper",
+      "state" : {
+        "revision" : "ae29be05145865e313ddfdacfceb5d4295489b3d",
+        "version" : "1.0.2"
+      }
+    },
+    {
+      "identity" : "swift-syntax",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-syntax.git",
+      "state" : {
+        "revision" : "0687f71944021d616d34d922343dcef086855920",
+        "version" : "600.0.1"
+      }
+    },
+    {
+      "identity" : "transformutils",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/yukiny0811/TransformUtils",
+      "state" : {
+        "revision" : "42cfd9dbaf03a5e197f65a3241520202bc316431",
+        "version" : "1.0.0"
+      }
+    }
+  ],
+  "version" : 3
+}
