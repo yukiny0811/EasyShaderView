@@ -129,7 +129,7 @@ void OITFragmentFunction(RasterizerData in,
 
     if (!is_null_texture(tex)) {
         constexpr sampler textureSampler (coord::pixel, address::clamp_to_edge, filter::linear);
-        fragmentColor = tex.sample(textureSampler, float2(in.uv.x*tex.get_width(), in.uv.y*tex.get_height()));
+        fragmentColor = tex.sample(textureSampler, float2(in.uv.x*tex.get_width(), in.uv.y*tex.get_height())) * fragmentColor.rgba;
     }
 
     if (fragmentColor.a == 0) {
