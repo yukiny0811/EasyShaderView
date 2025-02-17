@@ -225,12 +225,17 @@ public class TouchableMTKView: MTKView {
         let diff = (position ?? .zero) - (prevPosition ?? .zero)
         let moveRadX = -diff.x * 2
         let moveRadY = -diff.y * 2
-        renderer.camera.orbitCamera(
-            lookAt: .zero,
-            distanceDelta: 0,
-            xDelta: moveRadX,
-            yDelta: moveRadY
-        )
+        switch renderer.configuration.cameraType {
+        case .orbit:
+            renderer.camera.orbitCamera(
+                lookAt: .zero,
+                distanceDelta: 0,
+                xDelta: moveRadX,
+                yDelta: moveRadY
+            )
+        case .manual:
+            break
+        }
         renderer.mousePosition = position
         renderer.mouseDragged(delta: diff)
     }
