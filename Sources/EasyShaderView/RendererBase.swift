@@ -33,8 +33,7 @@ open class RendererBase: NSObject, MTKViewDelegate {
         viewMatrixInverse: .identity,
         modelToWorldMatrix: .identity,
         modelToWorldMatrixInverse: .identity,
-        modelToWorldNormalMatrix: .identity,
-        color: .one
+        modelToWorldNormalMatrix: .identity
     )
 
     internal var frameSize: f2 = .one {

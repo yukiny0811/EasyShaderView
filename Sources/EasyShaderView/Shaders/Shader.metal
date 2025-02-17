@@ -25,6 +25,7 @@ struct MainVertex {
     float3 position [[ attribute(0) ]];
     float3 normal [[ attribute(1) ]];
     float2 uv [[ attribute(2) ]];
+    float4 colorRGBA [[ attribute(3) ]];
 };
 
 struct RasterizerData {
@@ -43,7 +44,6 @@ struct Uniform3D {
     float4x4 modelToWorldMatrix;
     float4x4 modelToWorldMatrixInverse;
     float4x4 modelToWorldNormalMatrix;
-    float4 color;
 };
 
 vertex RasterizerData main_vert
@@ -54,7 +54,7 @@ vertex RasterizerData main_vert
 
     RasterizerData rd;
     rd.position = uniform.projectionMatrix * uniform.viewMatrix * uniform.modelToWorldMatrix * float4(vIn.position, 1.0);
-    rd.color = uniform.color;
+    rd.color = vIn.colorRGBA;
     rd.normal = normalize((uniform.modelToWorldNormalMatrix * float4(vIn.normal, 0.0)).xyz);
     rd.uv = vIn.uv;
     rd.worldPosition = (uniform.modelToWorldMatrix * float4(vIn.position, 1.0)).xyz;

@@ -38,6 +38,4 @@ public struct BaseUniform {
     /// The normal matrix used to correctly transform normals from model space to world space.
     /// Typically derived from the inverse transpose of the model-to-world matrix.
     public var modelToWorldNormalMatrix: simd_float4x4
-
-    public var color: simd_float4
 }
