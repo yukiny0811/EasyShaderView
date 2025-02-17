@@ -85,12 +85,17 @@ public class TouchableMTKView: MTKView {
     public override func mouseDragged(with event: NSEvent) {
         let moveRadX = -Float(event.deltaX) * 0.01
         let moveRadY = Float(event.deltaY) * 0.01
-        renderer.camera.orbitCamera(
-            lookAt: .zero,
-            distanceDelta: 0,
-            xDelta: moveRadX,
-            yDelta: moveRadY
-        )
+        switch renderer.configuration.cameraType {
+        case .orbit:
+            renderer.camera.orbitCamera(
+                lookAt: .zero,
+                distanceDelta: 0,
+                xDelta: moveRadX,
+                yDelta: moveRadY
+            )
+        case .manual:
+            break
+        }
         var delta: f2?
         if let prevMousePos = renderer.mousePosition,
            let currentMousePos = getNormalizedMouseLocation(event: event) {
