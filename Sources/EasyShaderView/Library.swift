@@ -15,7 +15,7 @@ import TransformUtils
  render pipeline states, depth-stencil states, and vertex descriptors. It centralizes
  resource creation and configuration for use throughout the rendering system.
  */
-enum Library {
+public enum Library {
 
     /// The default Metal device for the system.
     static let device = MTLCreateSystemDefaultDevice()!
@@ -24,7 +24,7 @@ enum Library {
     static let library = try! device.makeDefaultLibrary(bundle: .module)
 
     /// The command queue used to schedule and execute rendering commands.
-    static let commandQueue = device.makeCommandQueue()!
+    public static let commandQueue = device.makeCommandQueue()!
 
     static let depthStencilState: MTLDepthStencilState = {
         let depthStateDesc = Self.createDepthStencilDescriptor(compareFunc: .less, writeDepth: false)
