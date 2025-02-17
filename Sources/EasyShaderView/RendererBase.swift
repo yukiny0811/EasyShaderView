@@ -53,21 +53,32 @@ open class RendererBase: NSObject, MTKViewDelegate {
 
     public func draw(in view: MTKView) {
         guard let drawable = view.currentDrawable else { return }
+        let commandBuffer = Library.commandQueue.makeCommandBuffer()!
 
-        if revealTexture == nil || revealTexture?.width != drawable.texture.width || revealTexture?.height != drawable.texture.height {
-            revealTexture = Self.createTexture(width: drawable.texture.width, height: drawable.texture.height, pixelFormat: drawable.texture.pixelFormat, label: "reveal tex", isRenderTarget: true)
+        draw(commandBuffer: commandBuffer, drawableTexture: drawable.texture)
+
+        commandBuffer.present(drawable)
+        commandBuffer.commit()
+    }
+
+    public func draw(commandBuffer: MTLCommandBuffer, drawableTexture: MTLTexture) {
+
+        if revealTexture == nil || revealTexture?.width != drawableTexture.width || revealTexture?.height != drawableTexture.height {
+            revealTexture = Self.createTexture(width: drawableTexture.width, height: drawableTexture.height, pixelFormat: drawableTexture.pixelFormat, label: "reveal tex", isRenderTarget: true)
         }
 
         elapsed = Float(Date().timeIntervalSince(startDate))
-
-        // Create a command buffer for encoding commands.
-        let commandBuffer = Library.commandQueue.makeCommandBuffer()!
 
         let computeEncoder = commandBuffer.makeComputeCommandEncoder()!
         compute(encoder: computeEncoder)
         computeEncoder.endEncoding()
 
-        let renderPassDescriptor = view.currentRenderPassDescriptor!
+        let renderPassDescriptor = MTLRenderPassDescriptor()
+        renderPassDescriptor.colorAttachments[0].texture = drawableTexture
+        renderPassDescriptor.colorAttachments[0].clearColor = .init(red: 0, green: 0, blue: 0, alpha: 0)
+        renderPassDescriptor.colorAttachments[0].loadAction = .load
+        renderPassDescriptor.colorAttachments[0].storeAction = .store
+        
         renderPassDescriptor.tileWidth = Self.optimalTileSize.width
         renderPassDescriptor.tileHeight = Self.optimalTileSize.height
         renderPassDescriptor.imageblockSampleLength = Library.resolvePipelineState.imageblockSampleLength
@@ -79,7 +90,6 @@ open class RendererBase: NSObject, MTKViewDelegate {
         encoder.setRenderPipelineState(Library.clearPipelineState)
         encoder.dispatchThreadsPerTile(Self.optimalTileSize)
         encoder.setCullMode(.none)
-        encoder.setDepthStencilState(Library.depthStencilState)
         encoder.setRenderPipelineState(Library.mainRenderPipelineState)
 
         // Pass the uniform data to the vertex shader.
@@ -99,8 +109,6 @@ open class RendererBase: NSObject, MTKViewDelegate {
         encoder.setRenderPipelineState(Library.resolvePipelineState)
         encoder.dispatchThreadsPerTile(Self.optimalTileSize)
         encoder.endEncoding()
-        commandBuffer.present(drawable)
-        commandBuffer.commit()
     }
 
     open func compute(encoder: MTLComputeCommandEncoder) {}

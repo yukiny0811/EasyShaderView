@@ -26,16 +26,24 @@ class MyRenderer: RendererBase {
         // mainTexture: fragment texture binding at 0
         // color: baseUniform.color -> uses color when main texture is nil
 
-        let vertices: [MainVertex] = [
+        let vertices1: [MainVertex] = [
             MainVertex(position: f3(1, 0, 0), normal: f3(0, 0, 1), uv: f2(0, 0)),
             MainVertex(position: f3(1, 1, 0), normal: f3(0, 0, 1), uv: f2(0, 0)),
             MainVertex(position: f3(0, 1, 0), normal: f3(0, 0, 1), uv: f2(0, 0)),
-            MainVertex(position: f3(1, 0, 0), normal: f3(0, 0, 1), uv: f2(0, 0)),
-            MainVertex(position: f3(0, 1, 0), normal: f3(0, 0, 1), uv: f2(0, 0)),
-            MainVertex(position: f3(0, 0, 0), normal: f3(0, 0, 1), uv: f2(0, 0)),
         ]
-        baseUniform.color = f4(1, 1, 0, 1)
-        encoder.setVertexBytes(vertices, length: MainVertex.memorySize * vertices.count, index: 0)
-        encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
+        baseUniform.color = f4(1, 1, 0, 0.3)
+        encoder.setVertexBytes(vertices1, length: MainVertex.memorySize * vertices1.count, index: 0)
+        encoder.setVertexBytes([baseUniform], length: BaseUniform.memorySize, index: 10)
+        encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices1.count)
+
+        let vertices2: [MainVertex] = [
+            MainVertex(position: f3(1, 0, 2), normal: f3(0, 0, 1), uv: f2(0, 0)),
+            MainVertex(position: f3(0, 1, 2), normal: f3(0, 0, 1), uv: f2(0, 0)),
+            MainVertex(position: f3(0, 0, 2), normal: f3(0, 0, 1), uv: f2(0, 0)),
+        ]
+        baseUniform.color = f4(0, 0, 1, 0.3)
+        encoder.setVertexBytes(vertices2, length: MainVertex.memorySize * vertices2.count, index: 0)
+        encoder.setVertexBytes([baseUniform], length: BaseUniform.memorySize, index: 10)
+        encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices2.count)
     }
 }

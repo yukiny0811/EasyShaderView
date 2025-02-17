@@ -29,9 +29,7 @@ public class TouchableMTKView: MTKView {
         self.preferredFramesPerSecond = 120
         self.autoResizeDrawable = true
         self.clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 0)
-        self.depthStencilPixelFormat = .depth32Float_stencil8
         self.sampleCount = 1
-        self.clearDepth = 1.0
         self.layer?.isOpaque = false
     }
 
@@ -162,9 +160,7 @@ public class TouchableMTKView: MTKView {
         self.preferredFramesPerSecond = 120
         self.autoResizeDrawable = true
         self.clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 0)
-        self.depthStencilPixelFormat = .depth32Float_stencil8
         self.sampleCount = 1
-        self.clearDepth = 1.0
         self.layer.isOpaque = false
     }
 

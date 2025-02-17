@@ -26,11 +26,6 @@ public enum Library {
     /// The command queue used to schedule and execute rendering commands.
     public static let commandQueue = device.makeCommandQueue()!
 
-    static let depthStencilState: MTLDepthStencilState = {
-        let depthStateDesc = Self.createDepthStencilDescriptor(compareFunc: .less, writeDepth: false)
-        return device.makeDepthStencilState(descriptor: depthStateDesc)!
-    }()
-
     static let constantValue = MTLFunctionConstantValues()
 
     /// The main render pipeline state used for rendering, configured with vertex and fragment functions,
@@ -43,9 +38,6 @@ public enum Library {
         desc.rasterSampleCount = 1
         desc.colorAttachments[0].pixelFormat = .bgra8Unorm
         desc.colorAttachments[0].isBlendingEnabled = false
-
-        desc.depthAttachmentPixelFormat = .depth32Float_stencil8
-        desc.stencilAttachmentPixelFormat = .depth32Float_stencil8
 
         return try! device.makeRenderPipelineState(descriptor: desc)
     }()
