@@ -60,7 +60,7 @@ open class RendererBase: NSObject, MTKViewDelegate {
         commandBuffer.commit()
     }
 
-    public func draw(commandBuffer: MTLCommandBuffer, drawableTexture: MTLTexture) {
+    open func draw(commandBuffer: MTLCommandBuffer, drawableTexture: MTLTexture) {
 
         if revealTexture == nil || revealTexture?.width != drawableTexture.width || revealTexture?.height != drawableTexture.height {
             revealTexture = Self.createTexture(width: drawableTexture.width, height: drawableTexture.height, pixelFormat: drawableTexture.pixelFormat, label: "reveal tex", isRenderTarget: true)
